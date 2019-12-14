@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using WebAppBlazor.Areas.Identity;
 using WebAppBlazor.Data;
 using SharedLib.Data;
+using SharedLib.Services;
 
 namespace WebAppBlazor
 {
@@ -43,6 +44,9 @@ namespace WebAppBlazor
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            services.AddTransient<ICinematicItemService, CinematicItemService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

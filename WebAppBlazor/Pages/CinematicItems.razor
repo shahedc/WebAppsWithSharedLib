@@ -1,0 +1,55 @@
+﻿@page "/cinematicitems"
+
+@using SharedLib.Data
+@using SharedLib.Models
+@using SharedLib.Services
+@inject ICinematicItemService service
+
+
+<h1>Cinematic Items</h1>
+
+<p>This is a list of Cinematic Items!</p>
+
+@if (cinematicItems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Release Date</th>
+                <th>Phase</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cinematicItem in cinematicItems)
+            {
+                <tr>
+                    <td>@cinematicItem.Name.</td>
+                    <td>@cinematicItem.ReleaseDate</td>
+                    <td>@cinematicItem.Phase</td>
+                    <td><input type="button" class="btn btn-primary" value="Edit" /></td>
+                    <td><input type="button" class="btn btn-danger" value="Delete" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div>
+    <input type="button" data-toggle="modal" data-target="#taskModal" class="btn btn-primary" value="Add Item" />
+</div>
+
+
+@code {
+    List<CinematicItem> cinematicItems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cinematicItems = await service.Get();
+    }
+}
