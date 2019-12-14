@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppBlazor", "WebAppBlazo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLib", "SharedLib\SharedLib.csproj", "{DB22A14F-630E-4941-BF21-765912B18629}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppPages", "WebAppPages\WebAppPages.csproj", "{6AEF1158-572B-45ED-9162-9BB57ADD5B9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DB22A14F-630E-4941-BF21-765912B18629}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB22A14F-630E-4941-BF21-765912B18629}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB22A14F-630E-4941-BF21-765912B18629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AEF1158-572B-45ED-9162-9BB57ADD5B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AEF1158-572B-45ED-9162-9BB57ADD5B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AEF1158-572B-45ED-9162-9BB57ADD5B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AEF1158-572B-45ED-9162-9BB57ADD5B9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

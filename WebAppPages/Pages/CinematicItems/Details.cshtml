@@ -1,0 +1,43 @@
+﻿@page
+@model WebAppPages.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CinematicItem</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CinematicItem.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CinematicItem.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CinematicItem.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CinematicItem.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CinematicItem.Phase)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CinematicItem.Phase)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CinematicItem.ReleaseDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CinematicItem.ReleaseDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.CinematicItem.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
