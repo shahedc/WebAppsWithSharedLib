@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SharedLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,8 @@ namespace SharedLib.Data
         {
 
         }
+
+        public DbSet<CinematicItem> CinematicItems { get; set; }
 
     }
 }
