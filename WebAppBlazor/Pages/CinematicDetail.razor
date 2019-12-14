@@ -1,0 +1,75 @@
+﻿@page "/cinematicdetail"
+
+@using SharedLib.Data
+@using SharedLib.Models
+@using SharedLib.Services
+@inject ICinematicItemService service
+@inject IJSRuntime jsRuntime
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="taskModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@CustomHeader</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@CinematicItemObject" OnValidSubmit="@HandleValidSubmit">
+                    <div class="form-group">
+                        <label for="itemName">Item Name</label>
+                        <input type="hidden" @bind-value="@CinematicItemObject.Id" />
+                        <InputText id="itemName" class="form-control" @bind-Value="@CinematicItemObject.Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="itemDescription">Item Description</label>
+                        <input type="text" id="itemDescription" name="itemDescription" @bind-value="@CinematicItemObject.Description" />
+                    </div>
+                    <div class="form-group">
+                        <label for="itemPhase">Item Phase</label>
+                        <input type="number" id="itemPhase" name="itemDescription" @bind-value="@CinematicItemObject.Phase" />
+                    </div>
+                    <div class="form-group">
+                        <label for="releaseDate">Release Date</label>
+                        <input type="date" id="releaseDate" name="releaseDate" @bind-value="@CinematicItemObject.ReleaseDate" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public CinematicItem CinematicItemObject { get; set; }
+
+    [Parameter]
+    public Action DataChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment CustomHeader { get; set; }
+
+    private async Task CloseTaskModal()
+    {
+        await jsRuntime.InvokeAsync<object>("CloseModal", "taskModal");
+    }
+
+    private async void HandleValidSubmit()
+    {
+        if (CinematicItemObject.Id == 0)
+        {
+            await service.Add(CinematicItemObject);
+        }
+        else
+        {
+            await service.Update(CinematicItemObject);
+        }
+        await CloseTaskModal();
+        DataChanged?.Invoke();
+    }
+}

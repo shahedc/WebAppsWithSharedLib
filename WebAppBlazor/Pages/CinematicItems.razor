@@ -4,7 +4,7 @@
 @using SharedLib.Models
 @using SharedLib.Services
 @inject ICinematicItemService service
-
+@inject IJSRuntime jsRuntime
 
 <h1>Cinematic Items</h1>
 
@@ -30,26 +30,63 @@ else
             @foreach (var cinematicItem in cinematicItems)
             {
                 <tr>
-                    <td>@cinematicItem.Name.</td>
+                    <td>@cinematicItem.Name</td>
                     <td>@cinematicItem.ReleaseDate</td>
                     <td>@cinematicItem.Phase</td>
-                    <td><input type="button" class="btn btn-primary" value="Edit" /></td>
-                    <td><input type="button" class="btn btn-danger" value="Delete" /></td>
+                    <td><input type="button" class="btn btn-primary" @onclick="(() => PrepareForEdit(cinematicItem))" data-toggle="modal" data-target="#taskModal" value="Edit" /></td>
+                    <td><input type="button" class="btn btn-danger" @onclick="(() => PrepareForDelete(cinematicItem))" data-toggle="modal" data-target="#confirmDeleteModal" value="Delete" /></td>
+
                 </tr>
             }
         </tbody>
     </table>
 }
 <div>
-    <input type="button" data-toggle="modal" data-target="#taskModal" class="btn btn-primary" value="Add Item" />
+    <input type="button" data-toggle="modal" data-target="#taskModal" class="btn btn-primary" value="Add Item" @onclick="(() => InitializeCinematicItemObject())" />
 </div>
 
+<ConfirmDialog OnClick="@Delete" />
+<CinematicDetail CinematicItemObject=cinematicItemObject
+                 DataChanged="@DataChanged">
+    <CustomHeader>@customHeader</CustomHeader>
+</CinematicDetail>
 
 @code {
     List<CinematicItem> cinematicItems;
+    CinematicItem cinematicItemObject = new CinematicItem();
+    string customHeader = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         cinematicItems = await service.Get();
+    }
+    private void InitializeCinematicItemObject()
+    {
+        cinematicItemObject = new CinematicItem();
+        customHeader = "Add New Item";
+    }
+
+    private async void DataChanged()
+    {
+        cinematicItems = await service.Get();
+        StateHasChanged();
+    }
+    private void PrepareForEdit(CinematicItem cinematicItem)
+    {
+        customHeader = "Edit Item";
+        cinematicItemObject = cinematicItem;
+    }
+
+    private void PrepareForDelete(CinematicItem cinematicItem)
+    {
+        cinematicItemObject = cinematicItem;
+    }
+
+    private async Task Delete()
+    {
+        var task = await service.Delete(cinematicItemObject.Id);
+        await jsRuntime.InvokeAsync<object>("CloseModal", "confirmDeleteModal");
+        cinematicItems = await service.Get();
+        cinematicItemObject = new CinematicItem();
     }
 }

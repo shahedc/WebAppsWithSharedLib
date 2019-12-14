@@ -20,4 +20,8 @@
     <ProjectReference Include="..\SharedLib\SharedLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
 </Project>
